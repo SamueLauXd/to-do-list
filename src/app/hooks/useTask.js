@@ -2,8 +2,22 @@ import { useState } from "react";
 
 export function useTask() {
     const [tasks, setTasks] = useState([])
+    const [completedTasks, setCompletedTasks] = useState([])
 
-    const clearTasks = () => {setTasks([])}
+    const clearTasks = () => {setCompletedTasks([])}
+
+    const completeTask = (id) => {
+        setTimeout(() => {
+            //agregar a las completadas
+            const completed = tasks.filter(task => task.id === id)
+            setCompletedTasks(prev => [...prev, completed[0]])
+
+            //--------------------------
+
+            //eliminar de las pendientes
+            setTasks(tasks.filter(task => task.id !== id))
+        }, 200)
+    }
 
     const handleSubmit = (e) => {{
         e.preventDefault()
@@ -14,14 +28,14 @@ export function useTask() {
         const array = [...tasks]
         array.push(newTask)
         setTasks(array)
-        console.log(array);
         formulario.reset()
     }}
 
     return {
         tasks,
-        setTasks,
         clearTasks,
-        handleSubmit
+        handleSubmit,
+        completeTask,
+        completedTasks
     }
 }
