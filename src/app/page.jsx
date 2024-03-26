@@ -1,6 +1,6 @@
 'use client'
 
-import { Trash2 } from "lucide-react";
+import { BsTrash3 } from "react-icons/bs";
 import { useTask } from "./hooks/useTask";
 import { Form } from "./components/Form";
 import { TaskList } from "./components/TaskList";
@@ -17,7 +17,7 @@ export default function Home() {
 
         <div className="py-2 border-b flex justify-between items-center">
           <h1 className="font-bold text-[19pt] md:text-[25pt]">To Do List</h1>
-          <button onClick={clearTasks} className="text-[rgb(142,142,147)] dark:text-[rgb(142,142,147)] hover:text-[rgb(255,59,48)] transition-color ease-in duration-300"><Trash2 size={24}/></button>
+          <button onClick={clearTasks} className="text-[rgb(142,142,147)] dark:text-[rgb(142,142,147)] hover:text-[rgb(255,59,48)] transition-color ease-in duration-300"><BsTrash3 size={24}/></button>
         </div>
 
         <Form handleSubmit={handleSubmit}/>
