@@ -1,7 +1,12 @@
 import { useState } from "react";
 
 export function useTask() {
-    const initialTasks = JSON.parse(window.localStorage.getItem("pending")) || []
+
+    let initialTasks
+    if (typeof window !== 'undefined') {
+        initialTasks = JSON.parse(window.localStorage.getItem("pending"))
+    }
+
     const initialCompleted = []
 
     const [tasks, setTasks] = useState(initialTasks)
