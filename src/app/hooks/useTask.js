@@ -13,7 +13,9 @@ export function useTask() {
     const [completedTasks, setCompletedTasks] = useState(initialCompleted)
 
     const updateLocalStorage = (key, state) => {
-        window.localStorage.setItem(key, JSON.stringify(state))
+        if (typeof window !== 'undefined') {
+            window.localStorage.setItem(key, JSON.stringify(state))
+        }
     }
 
     const clearTasks = () => {
