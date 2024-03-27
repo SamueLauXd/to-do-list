@@ -1,10 +1,19 @@
 import { useState } from "react";
 
 export function useTask() {
-    const [tasks, setTasks] = useState([])
-    const [completedTasks, setCompletedTasks] = useState([])
+    const initialTasks = JSON.parse(window.localStorage.getItem("pending")) || []
+    const initialCompleted = []
 
-    const clearTasks = () => {setCompletedTasks([])}
+    const [tasks, setTasks] = useState(initialTasks)
+    const [completedTasks, setCompletedTasks] = useState(initialCompleted)
+
+    const updateLocalStorage = (key, state) => {
+        window.localStorage.setItem(key, JSON.stringify(state))
+    }
+
+    const clearTasks = () => {
+        setCompletedTasks([])
+    }
 
     const completeTask = (id) => {
         setTimeout(() => {
@@ -13,7 +22,9 @@ export function useTask() {
             setCompletedTasks(prev => [...prev, completed[0]])
 
             //eliminar de las pendientes
-            setTasks(tasks.filter(task => task.id !== id))
+            const eliminate = tasks.filter(task => task.id !== id)
+            setTasks(eliminate)
+            updateLocalStorage("pending", eliminate)
         }, 200)
     }
 
@@ -27,6 +38,7 @@ export function useTask() {
         array.push(newTask)
         setTasks(array)
         formulario.reset()
+        updateLocalStorage("pending", array)
     }}
 
     return {
