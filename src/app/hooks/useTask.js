@@ -12,8 +12,6 @@ export function useTask() {
             const completed = tasks.filter(task => task.id === id)
             setCompletedTasks(prev => [...prev, completed[0]])
 
-            //--------------------------
-
             //eliminar de las pendientes
             setTasks(tasks.filter(task => task.id !== id))
         }, 200)

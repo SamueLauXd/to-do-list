@@ -12,7 +12,7 @@ export function TaskList({tasks, completeTask}) {
                     </li>
                 ))
                 :
-                    <p className="text-sm text-center py-4">Create a task to view it!</p>
+                    <p className="text-sm text-center py-4">You have no pending tasks</p>
             }
         </>
     )
