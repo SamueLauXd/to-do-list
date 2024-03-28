@@ -5,23 +5,23 @@ export function useTask() {
     const [tasks, setTasks] = useState([])
     const [completedTasks, setCompletedTasks] = useState([])
     
-    // useEffect(() => {
-    //     setTasks(getLocalStorage("pending")) || []
-    //     setCompletedTasks(getLocalStorage("completed")) || []
-    // }, [])
+    useEffect(() => {
+        setTasks(getLocalStorage("pending"))
+        setCompletedTasks(getLocalStorage("completed"))
+    }, [])
 
     const updateLocalStorage = (key, state) => {
-            return typeof window !== "undefined" ? window.localStorage.setItem(key, JSON.stringify(state)) : undefined
+            return typeof window !== "undefined" ? window.localStorage.setItem(key, JSON.stringify(state)) : []
     }
 
     const getLocalStorage = (key) => {
-            return typeof window !== "undefined" ? JSON.parse(window.localStorage.getItem(key)) : undefined
+            return typeof window !== "undefined" ? JSON.parse(window.localStorage.getItem(key)) : []
     }
 
 
     const clearTasks = () => { 
         setCompletedTasks([])
-        //updateLocalStorage("completed", [])
+        updateLocalStorage("completed", [])
     }
 
     const completeTask = (id) => {
@@ -30,14 +30,14 @@ export function useTask() {
             const completed = tasks.filter(task => task.id === id)
             setCompletedTasks(prevState => {
                 const updatedCompletedTasks = [...prevState, ...completed.slice(0, 1)];
-                //updateLocalStorage("completed", updatedCompletedTasks)
+                updateLocalStorage("completed", updatedCompletedTasks)
                 return updatedCompletedTasks;
             });
 
             //eliminar de las pendientes
             const eliminate = tasks.filter(task => task.id !== id)
             setTasks(eliminate)
-            //updateLocalStorage("pending", eliminate)
+            updateLocalStorage("pending", eliminate)
         }, 200)
     }
 
@@ -51,7 +51,7 @@ export function useTask() {
         array.push(newTask)
         setTasks(array)
         formulario.reset()
-        //updateLocalStorage("pending", array)
+        updateLocalStorage("pending", array)
     }}
 
     return {
